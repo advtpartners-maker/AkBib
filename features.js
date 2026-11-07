@@ -24,4 +24,17 @@
   document.addEventListener("akaio-language-change", showPage);
   showPage();
   controls.hidden = false;
+
+  const scene = document.querySelector(".study-scene");
+  if (scene) {
+    const syncScale = () => {
+      scene.style.setProperty("--scene-scale", (scene.clientWidth / 1672).toFixed(6));
+    };
+    if (window.ResizeObserver) {
+      new ResizeObserver(syncScale).observe(scene);
+    } else {
+      window.addEventListener("resize", syncScale, { passive: true });
+    }
+    syncScale();
+  }
 })();

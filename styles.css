@@ -42,19 +42,51 @@ nav a:hover, .header-link:hover, .text-link:hover { color: var(--orange); }
 .header-link { font-size: 11px; color: var(--muted); }
 .header-link span { margin-left: 16px; color: var(--orange); }
 .hero { position: relative; max-width: 1920px; margin-inline: auto; isolation: isolate; }
-.study-scene { position: relative; }
+.study-scene { position: relative; container-type: inline-size; --scene-scale: 1; }
 .scene-image { display: block; width: 100%; height: auto; }
-/* All four screen corners use the background's 1672 x 941 coordinate space. */
+.study-scene::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, #100c08d9 0%, #100c08b8 27%, transparent 45%), linear-gradient(0deg, var(--bg), transparent 12%); pointer-events: none; }
+.screen-stage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+}
+.screen-scaler {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1672px;
+  height: 941px;
+  -webkit-transform-origin: 0 0;
+  transform-origin: 0 0;
+  -webkit-transform: scale(var(--scene-scale, 1));
+  transform: scale(var(--scene-scale, 1));
+}
+@supports (transform: scale(calc(100cqw / 1672px))) {
+  .screen-scaler {
+    -webkit-transform: scale(calc(100cqw / 1672px));
+    transform: scale(calc(100cqw / 1672px));
+  }
+}
 .screen-plane {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 1000px;
   height: 620px;
   overflow: hidden;
   background: #1d1e23;
+  -webkit-transform-origin: 0 0;
   transform-origin: 0 0;
-  transform: matrix3d(.5237390226,-.05002256495,0,-.0001106854084,-.08905006834,.6253641839,0,-.00005569943978,0,0,1,0,788,235,0,1);
+  -webkit-transform: matrix3d(0.5237390226, -0.05002256495, 0, -0.0001106854084, -0.08905006834, 0.6253641839, 0, -0.00005569943978, 0, 0, 1, 0, 788, 235, 0, 1);
+  transform: matrix3d(0.5237390226, -0.05002256495, 0, -0.0001106854084, -0.08905006834, 0.6253641839, 0, -0.00005569943978, 0, 0, 1, 0, 788, 235, 0, 1);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 .original-screen { width: 100%; height: 100%; object-fit: cover; object-position: center; }
-.study-scene::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, #100c08d9 0%, #100c08b8 27%, transparent 45%), linear-gradient(0deg, var(--bg), transparent 12%); pointer-events: none; }
 .hero-copy { position: absolute; top: 14%; left: 5%; width: 35%; max-width: 560px; }
 .eyebrow { margin: 0 0 22px; font: 11px/1.8 var(--mono); letter-spacing: 1.6px; color: var(--orange); }
 .hero-copy .eyebrow { font-size: 13px; }

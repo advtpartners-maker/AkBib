@@ -88,7 +88,7 @@ const brand = document.querySelector(".header .brand");
 const nav = document.querySelector("nav");
 const canonical = document.querySelector('link[rel="canonical"]');
 const siteURL = canonical.href;
-const russian = { title: document.title, description: description.content, alt: screen.alt, brand: brand.getAttribute("aria-label"), nav: nav.getAttribute("aria-label") };
+const russian = { title: document.title, description: description.content, alt: screen ? screen.alt : "", brand: brand.getAttribute("aria-label"), nav: nav.getAttribute("aria-label") };
 
 function setLanguage(value, { updateURL = true, pushHistory = false } = {}) {
   const english = value === "en";
@@ -111,7 +111,7 @@ function setLanguage(value, { updateURL = true, pushHistory = false } = {}) {
   const previewAlt = english ? "Akaio Bible: Bible study software" : "Akaio Bible: приложение для изучения Библии";
   document.querySelector('meta[property="og:image:alt"]').content = previewAlt;
   document.querySelector('meta[name="twitter:image:alt"]').content = previewAlt;
-  screen.alt = english ? "Original AKAIO screenshot: Bible window, Genesis 1" : russian.alt;
+  if (screen) screen.alt = english ? "Original AKAIO screenshot: Bible window, Genesis 1" : russian.alt;
   brand.setAttribute("aria-label", english ? "AKAIO, home" : russian.brand);
   nav.setAttribute("aria-label", english ? "Main navigation" : russian.nav);
   document.querySelector(".payment-methods").setAttribute("aria-label", english ? "Ways to support" : "Способы поддержки");
